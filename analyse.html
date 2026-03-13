@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JDI - Analyse</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div class="brand">JUST <span class="brand-do">DO</span> IT</div>
+      <nav class="top-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="liste.html">Liste JDI</a>
+        <a href="formulaire.html">Formulaire</a>
+        <a href="itemvisu.html">Visualisation</a>
+        <a class="active" href="analyse.html">Analyse</a>
+        <a href="vote.html">Vote</a>
+        <a href="help.html">Aide / FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Analyse JDI</h1>
+      <p class="page-subtitle">Pilotage de l'activite, des blocages et de la valeur generee</p>
+    </div>
+
+    <section class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">01</span> Filtre de periode</h2>
+      </div>
+      <div class="analyse-filter-row">
+        <div>
+          <label for="periodPreset">Periode analysee</label>
+          <select id="periodPreset">
+            <option value="currentFY">Annee fiscale en cours</option>
+            <option value="previousFY">Annee fiscale precedente</option>
+            <option value="last12">12 derniers mois</option>
+            <option value="custom">Periode personnalisee</option>
+          </select>
+        </div>
+
+        <div id="customDates" class="analyse-custom-dates hidden">
+          <div>
+            <label for="customStart">Date de debut</label>
+            <input type="date" id="customStart">
+          </div>
+          <div>
+            <label for="customEnd">Date de fin</label>
+            <input type="date" id="customEnd">
+          </div>
+        </div>
+
+        <div>
+          <button type="button" class="btn secondary" id="applyPeriod">Appliquer</button>
+        </div>
+      </div>
+      <label class="form-note analyse-compare-toggle">
+        <input type="checkbox" id="compareN1"> Afficher comparaison N-1 (indicateur)
+      </label>
+      <div class="info-box" id="periodLabel">Periode analysee:</div>
+      <div class="form-note" id="periodCompareLabel"></div>
+    </section>
+
+    <section class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">02</span> Synthese globale</h2>
+      </div>
+      <div class="analyse-kpi-grid analyse-kpi-grid-7">
+        <article class="analyse-kpi-card"><div class="kpi-label">Nombre total de JDI</div><div class="kpi-value" id="kpiTotal">0</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">JDI en cours</div><div class="kpi-value" id="kpiOpen">0</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">JDI completes</div><div class="kpi-value" id="kpiDone">0</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">JDI annules</div><div class="kpi-value" id="kpiCanceled">0</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">Taux de cloture</div><div class="kpi-value" id="kpiCloseRate">0%</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">Delai moyen de cloture</div><div class="kpi-value" id="kpiAvgCloseDays">0 j</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">Age moyen des JDI en cours</div><div class="kpi-value" id="kpiAvgOpenAge">0 j</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">Completes par mois</div><div class="kpi-value" id="kpiDonePerMonth">0</div></article>
+        <article class="analyse-kpi-card"><div class="kpi-label">Taux de transformation</div><div class="kpi-value" id="kpiConversion">0%</div></article>
+      </div>
+    </section>
+
+    <section class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">03</span> Impact des JDI (gains estimes)</h2>
+      </div>
+      <div class="analyse-impact-grid">
+        <article class="analyse-impact-card"><div class="kpi-label">Temps economise total</div><div class="kpi-value" id="impactTime">0 h</div></article>
+        <article class="analyse-impact-card"><div class="kpi-label">Gain economique estime</div><div class="kpi-value" id="impactEuro">0 EUR</div></article>
+        <article class="analyse-impact-card"><div class="kpi-label">JDI avec gain chiffre</div><div class="kpi-value" id="impactCount">0</div></article>
+        <article class="analyse-impact-card"><div class="kpi-label">Top gain observe</div><div class="kpi-value" id="impactTop">-</div></article>
+      </div>
+      <div class="analyse-mode-strip">
+        <span id="modeManual">Manuel: 0</span>
+        <span id="modeAuto">Automatique: 0</span>
+        <span id="modeNone">Sans gain chiffre: 0</span>
+        <span id="impactAvg">Gain moyen/JDI: 0 EUR</span>
+      </div>
+      <div class="analyse-panel analyse-subpanel">
+        <h3>Repartition des gains par type</h3>
+        <div id="gainTypeBars"></div>
+      </div>
+    </section>
+
+    <section class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">04</span> Dynamique activite</h2>
+      </div>
+      <div class="analyse-grid-3">
+        <article class="analyse-panel">
+          <h3>Repartition par secteur (empile)</h3>
+          <div id="sectorStack"></div>
+        </article>
+        <article class="analyse-panel">
+          <h3>Repartition par statut</h3>
+          <div id="statusBars"></div>
+        </article>
+        <article class="analyse-panel">
+          <h3>Evolution mensuelle</h3>
+          <div id="monthlyFlow"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">05</span> Pilotage action</h2>
+      </div>
+      <div class="analyse-grid-2">
+        <article class="analyse-panel">
+          <h3>JDI a suivre (en cours les plus anciens)</h3>
+          <div class="table-wrapper analyse-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Numero JDI</th>
+                  <th>Libelle</th>
+                  <th>Secteur</th>
+                  <th>Date d'ouverture</th>
+                  <th>Anciennete</th>
+                  <th>Statut</th>
+                  <th>Responsable</th>
+                  <th>Impact potentiel</th>
+                </tr>
+              </thead>
+              <tbody id="followRows"></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="analyse-panel">
+          <h3>JDI incomplets / donnees faibles</h3>
+          <div class="table-wrapper analyse-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Gravite</th>
+                  <th>Numero JDI</th>
+                  <th>Libelle</th>
+                  <th>Point d'alerte</th>
+                  <th>Score completude</th>
+                </tr>
+              </thead>
+              <tbody id="qualityRows"></tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">06</span> Valorisation visuelle</h2>
+      </div>
+      <div id="highlightCards" class="highlight-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div id="currentUser">Utilisateur:</div>
+    <div class="footer-brand">
+      <span>Entreprise:</span>
+      <img src="img/company-logo.svg" alt="Logo entreprise">
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/analyse.js"></script>
+</body>
+</html>

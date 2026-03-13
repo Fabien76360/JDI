@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="220" viewBox="0 0 420 220">
+  <rect width="420" height="220" fill="#eceff2"/>
+  <rect x="20" y="20" width="380" height="180" fill="#dfe5eb" stroke="#9aa6b5"/>
+  <text x="210" y="105" text-anchor="middle" font-family="Arial" font-size="18" fill="#4d5b6a">PHOTO AVANT 3</text>
+  <text x="210" y="130" text-anchor="middle" font-family="Arial" font-size="12" fill="#6a7785">Zone industrielle - demonstration</text>
+</svg>

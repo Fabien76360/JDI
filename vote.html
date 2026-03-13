@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JDI - Vote</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div class="brand">JUST <span class="brand-do">DO</span> IT</div>
+      <nav class="top-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="liste.html">Liste JDI</a>
+        <a href="formulaire.html">Formulaire</a>
+        <a href="itemvisu.html">Visualisation</a>
+        <a href="analyse.html">Analyse</a>
+        <a class="active" href="vote.html">Vote</a>
+        <a href="help.html">Aide / FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Vote JDI</h1>
+      <p class="page-subtitle">Nomination mensuelle, vote justifie et qualification annuelle</p>
+    </div>
+
+    <section id="voteAccessZone" class="analyse-zone zone">
+      <div class="zone-hdr">
+        <h2 class="analyse-title zone-title"><span class="zone-num">01</span> Acces restreint</h2>
+      </div>
+      <div class="vote-access-grid">
+        <div class="info-box">Cette page est reservee au comite de nomination/vote JDI.</div>
+        <div>
+          <label for="votePassword">Mot de passe</label>
+          <input id="votePassword" type="password" placeholder="Saisir le mot de passe">
+        </div>
+        <div>
+          <button id="voteLoginBtn" class="btn primary" type="button">Valider</button>
+        </div>
+      </div>
+      <p id="voteAccessMsg" class="form-note"></p>
+    </section>
+
+    <section id="voteContent" class="hidden">
+      <section class="analyse-zone zone">
+        <div class="toolbar vote-toolbar">
+          <h2 class="analyse-title zone-title vote-title-inline"><span class="zone-num">02</span> Acces / statut du scrutin</h2>
+          <button id="voteLogoutBtn" class="btn danger" type="button">Deconnexion</button>
+        </div>
+        <div class="vote-access-grid">
+          <div>
+            <label for="voteMonthSelect">Mois de vote</label>
+            <select id="voteMonthSelect"></select>
+          </div>
+          <div>
+            <label for="voteStatusSelect">Statut du scrutin</label>
+            <select id="voteStatusSelect">
+              <option value="ouvert">Scrutin ouvert</option>
+              <option value="cloture">Scrutin cloture</option>
+            </select>
+          </div>
+          <div class="info-box" id="voteStatusInfo"></div>
+        </div>
+      </section>
+
+      <section class="analyse-zone zone">
+        <div class="zone-hdr">
+          <h2 class="analyse-title zone-title"><span class="zone-num">03</span> Nomination des JDI</h2>
+        </div>
+        <div class="form-note mb-8">Un JDI nomine n'est pas automatiquement elu. Un JDI deja elu ne peut plus etre re-votable.</div>
+        <div id="nominationList" class="vote-list"></div>
+      </section>
+
+      <section class="analyse-zone zone">
+        <div class="zone-hdr">
+          <h2 class="analyse-title zone-title"><span class="zone-num">04</span> Vote du mois</h2>
+        </div>
+        <div class="vote-access-grid vote-gap-bottom">
+          <div>
+            <label for="voteUserSelect">Votant</label>
+            <select id="voteUserSelect"></select>
+          </div>
+          <div>
+            <label for="voteJustification">Justification (obligatoire)</label>
+            <textarea id="voteJustification" maxlength="240"></textarea>
+          </div>
+          <div>
+            <button id="saveVoteBtn" class="btn primary" type="button">Enregistrer le vote</button>
+          </div>
+        </div>
+        <div id="voteCandidates" class="vote-list"></div>
+      </section>
+
+      <section class="analyse-zone zone">
+        <div class="zone-hdr">
+          <h2 class="analyse-title zone-title"><span class="zone-num">05</span> Resultats du mois</h2>
+        </div>
+        <div class="table-wrapper analyse-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>JDI nomine</th>
+                <th>Secteur</th>
+                <th>Votes</th>
+                <th>Resultat</th>
+              </tr>
+            </thead>
+            <tbody id="voteResultRows"></tbody>
+          </table>
+        </div>
+        <div id="voteWinnerBanner" class="info-box vote-gap-top"></div>
+        <div id="voteJustifs" class="info-box vote-gap-top"></div>
+      </section>
+
+      <section class="analyse-zone zone">
+        <div class="zone-hdr">
+          <h2 class="analyse-title zone-title"><span class="zone-num">06</span> JDI qualifies pour l'annee</h2>
+        </div>
+        <div class="table-wrapper analyse-table-wrap compact">
+          <table>
+            <thead>
+              <tr>
+                <th>Mois</th>
+                <th>Numero JDI</th>
+                <th>Libelle</th>
+                <th>Secteur</th>
+                <th>Type / Gain estime</th>
+              </tr>
+            </thead>
+            <tbody id="qualifiedRows"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div id="currentUser">Utilisateur:</div>
+    <div class="footer-brand">
+      <span>Entreprise:</span>
+      <img src="img/company-logo.svg" alt="Logo entreprise">
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/vote.js"></script>
+</body>
+</html>

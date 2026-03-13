@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JDI - Formulaire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#F0EDE6; --bg-card:#FAFAF7; --bg-dark:#1C2B3A; --primary:#1C2B3A; --c-orange:#E8631A; --c-green:#2B7A4B; --c-amber:#B07A00; --c-red:#C0392B; --c-blue:#2567A0; --c-gold:#C49A00; --border:#CCC7BB; --border-str:#A89E92; --text:#1C2B3A; --text-muted:#6B6358; --text-light:#9A9288; --r:3px; --sh:0 2px 8px rgba(28,43,58,.09); --sh2:0 4px 16px rgba(28,43,58,.14); }
+    *{box-sizing:border-box;} html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Barlow",sans-serif;} body{min-height:100vh;display:flex;flex-direction:column;}
+    header{position:sticky;top:0;z-index:60;height:50px;background:var(--bg-dark);border-bottom:3px solid var(--c-orange);box-shadow:var(--sh);} .header-row{max-width:1360px;margin:0 auto;height:47px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .brand{font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:1.28rem;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1;white-space:nowrap;} .brand-do{color:var(--c-orange);} .top-nav{display:flex;align-items:stretch;gap:12px;height:100%;}
+    .top-nav a{display:inline-flex;align-items:center;text-decoration:none;color:rgba(255,255,255,.82);font-family:"Barlow Condensed",sans-serif;font-weight:600;text-transform:uppercase;font-size:.74rem;letter-spacing:.08em;border-bottom:3px solid transparent;padding:0 2px;} .top-nav a:hover{color:#fff;} .top-nav a.active{color:var(--c-orange);border-bottom-color:var(--c-orange);}
+    .container{width:min(1360px,calc(100% - 24px));margin:14px auto;padding:14px;flex:1;} .page-header{margin-bottom:16px;padding:12px 14px;border:1px solid var(--border);border-left:4px solid var(--c-orange);background:linear-gradient(180deg,#faf8f2 0%,#f4f0e7 100%);border-radius:var(--r);box-shadow:var(--sh);} .page-title{margin:0;font-family:"Barlow Condensed",sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;line-height:1;} .page-subtitle{margin:7px 0 0;color:var(--text-muted);font-size:.84rem;font-weight:500;}
+    .zone,.form-section{margin-bottom:1.5rem;border:1px solid var(--border);background:var(--bg-card);border-radius:var(--r);box-shadow:var(--sh);} .zone-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 12px 8px;border-bottom:1px dashed #d8d2c8;} .zone-title{margin:0;display:inline-flex;align-items:center;gap:8px;font-family:"Barlow Condensed",sans-serif;font-size:.98rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;} .zone-num{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:20px;border-radius:var(--r);background:var(--c-orange);color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:0 6px;}
+    .zone>.toolbar{margin:12px;} .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+    .btn,.btn-ghost,.btn-primary,.btn-danger,.btn.secondary,.btn.primary,.btn.danger{border:1px solid var(--border-str);border-radius:var(--r);padding:9px 24px;font-family:"Barlow Condensed",sans-serif;font-size:.77rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:.15s ease;} .btn:hover{transform:translateY(-1px);} .btn-ghost,.btn.secondary{background:transparent;color:var(--text);} .btn-primary,.btn.primary{background:var(--c-orange);border-color:#ce5513;color:#fff;} .btn-danger,.btn.danger{background:var(--c-red);border-color:#9d3025;color:#fff;}
+    .info-box{border:1px solid var(--border);background:#f7f4ee;border-radius:var(--r);padding:9px 10px;color:var(--text-muted);font-size:.8rem;}
+    .form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;} .form-section{padding:10px;} .form-section h3{margin:0 0 10px;display:inline-flex;align-items:center;gap:8px;font-family:"Barlow Condensed",sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;}
+    label{display:block;margin:0 0 5px;font-family:"Barlow Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.7rem;color:var(--text-muted);} label .required{color:var(--c-red);} .form-row{margin-bottom:10px;}
+    select,input,textarea{width:100%;padding:9px 10px;border:1px solid var(--border-str);border-radius:var(--r);background:#fffdf9;color:var(--text);font-family:"Barlow",sans-serif;font-size:.9rem;} textarea{min-height:90px;resize:vertical;} select:focus,input:focus,textarea:focus{outline:none;border-color:var(--c-blue);box-shadow:0 0 0 2px rgba(37,103,160,.12);} 
+    .form-note,.char-count{font-family:"DM Mono",monospace;font-size:.66rem;color:var(--text-light);} .gain-mode-row{display:grid;gap:6px;} .gain-mode-row label{display:flex;gap:8px;align-items:center;text-transform:none;font-family:"Barlow",sans-serif;font-size:.83rem;letter-spacing:0;color:var(--text);} .gain-mode-row input{width:auto;}
+    .gain-mode-block{border:1px dashed #d8d2c8;background:#f8f5ee;border-radius:var(--r);padding:10px;margin-top:8px;} .upload-box{border:1px dashed var(--border-str);padding:10px;border-radius:var(--r);background:#fbfaf6;} .upload-box-gap{margin-top:10px;}
+    .image-preview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px;} .image-preview-card{border:1px solid var(--border);border-radius:var(--r);padding:6px;background:#fff;} .image-preview-card img{width:100%;height:90px;object-fit:cover;border:1px solid var(--border);} 
+    .hidden{display:none !important;}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(28,43,58,.45);display:none;align-items:center;justify-content:center;z-index:120;} .modal-backdrop.show{display:flex;} .modal{width:min(520px,calc(100% - 20px));background:var(--bg-card);border:1px solid var(--border-str);border-radius:var(--r);box-shadow:var(--sh2);padding:12px;} .modal h4{margin:0 0 6px;font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;} .modal p{margin:0 0 12px;font-size:.9rem;}
+    footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.45);font-family:"DM Mono",monospace;font-size:.7rem;padding:9px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;} .footer-brand{display:inline-flex;align-items:center;gap:8px;} .footer-brand img{height:18px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.85);border-radius:2px;padding:1px 2px;}
+    @media (max-width:980px){.form-grid{grid-template-columns:1fr;}} @media (max-width:760px){header{height:auto;}.header-row{height:auto;padding:8px 10px;flex-direction:column;align-items:flex-start;}.top-nav{flex-wrap:wrap;}.container{width:calc(100% - 14px);padding:8px;}.image-preview-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div class="brand">JUST <span class="brand-do">DO</span> IT</div>
+      <nav class="top-nav">
+        <a data-guard="true" href="index.html">Dashboard</a>
+        <a data-guard="true" href="liste.html">Liste JDI</a>
+        <a class="active" data-guard="true" href="formulaire.html">Formulaire</a>
+        <a data-guard="true" href="itemvisu.html">Visualisation</a>
+        <a data-guard="true" href="analyse.html">Analyse</a>
+        <a data-guard="true" href="vote.html">Vote</a>
+        <a data-guard="true" href="help.html">Aide / FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Formulaire</h1>
+      <p class="page-subtitle">Creation et mise a jour d'une fiche JDI</p>
+    </div>
+
+    <section class="zone">
+      <div class="zone-hdr">
+        <h2 class="zone-title"><span class="zone-num">00</span> Contexte</h2>
+      </div>
+      <div class="toolbar">
+        <div class="info-box" id="modeLabel">Mode creation</div>
+        <div>
+          <button class="btn secondary" type="button" id="cancelBtn">Annuler</button>
+        </div>
+      </div>
+    </section>
+
+    <form id="jdiForm">
+      <div class="form-grid">
+        <section class="form-section">
+          <h3><span class="zone-num">01</span> Identification</h3>
+          <div class="form-row">
+            <label for="titre">Titre du JDI <span class="required">*</span></label>
+            <input id="titre" required>
+          </div>
+          <div class="form-row">
+            <label for="secteur">Secteur a l'initiative <span class="required">*</span></label>
+            <select id="secteur" required></select>
+          </div>
+          <div class="form-row">
+            <label for="contributeurs">Contributeurs</label>
+            <input id="contributeurs" placeholder="Noms / equipes impliquees">
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span class="zone-num">02</span> Description avant</h3>
+          <div class="form-row">
+            <label for="descAvant">Description avant <span class="required">*</span></label>
+            <textarea id="descAvant" maxlength="600" required></textarea>
+            <div class="char-count" id="countAvant"></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span class="zone-num">03</span> Description apres</h3>
+          <div class="form-row">
+            <label for="descApres">Description apres</label>
+            <textarea id="descApres" maxlength="600"></textarea>
+            <div class="char-count" id="countApres"></div>
+          </div>
+          <div class="form-row">
+            <label for="conditions">Conditions <span class="required">*</span></label>
+            <textarea id="conditions" maxlength="400" required></textarea>
+            <div class="char-count" id="countConditions"></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span class="zone-num">04</span> Gains</h3>
+          <div class="form-row">
+            <label for="typeGain">Type de gain</label>
+            <select id="typeGain"></select>
+          </div>
+
+          <div class="form-row gain-mode-row">
+            <label><input type="radio" name="gainMode" value="aucun" checked> Aucun gain chiffre</label>
+            <label><input type="radio" name="gainMode" value="manuel"> Gain estime saisi manuellement</label>
+            <label><input type="radio" name="gainMode" value="auto"> Gain estime calcule automatiquement</label>
+          </div>
+
+          <div id="gainManualFields" class="gain-mode-block hidden">
+            <div class="form-row">
+              <label for="gainTempsManuel">Gain temps estime (heures)</label>
+              <input id="gainTempsManuel" type="number" min="0" step="1">
+            </div>
+            <div class="form-row">
+              <label for="gainEuroManuel">Gain economique estime (EUR)</label>
+              <input id="gainEuroManuel" type="number" min="0" step="1">
+            </div>
+            <div class="form-row">
+              <label for="gainCommentaireManuel">Commentaire de calcul</label>
+              <textarea id="gainCommentaireManuel" maxlength="300"></textarea>
+            </div>
+          </div>
+
+          <div id="gainAutoFields" class="gain-mode-block hidden">
+            <div class="form-row">
+              <label for="tempsGagne">Temps gagne par action</label>
+              <input id="tempsGagne" type="number" min="0" step="1">
+            </div>
+            <div class="form-row">
+              <label for="uniteTemps">Unite de temps</label>
+              <select id="uniteTemps">
+                <option value="minute">minute</option>
+                <option value="heure">heure</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="frequence">Frequence</label>
+              <input id="frequence" type="number" min="0" step="1">
+            </div>
+            <div class="form-row">
+              <label for="uniteFrequence">Periode de frequence</label>
+              <select id="uniteFrequence">
+                <option value="jour">jour</option>
+                <option value="semaine">semaine</option>
+                <option value="mois">mois</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="nombreOccurrences">Nombre d'occurrences</label>
+              <input id="nombreOccurrences" type="number" min="0" step="1">
+            </div>
+            <div class="form-row">
+              <label for="nombreOperateurs">Nombre d'operateurs</label>
+              <input id="nombreOperateurs" type="number" min="1" step="1" value="1">
+            </div>
+            <div class="form-row">
+              <label for="coutHoraire">Cout horaire (EUR)</label>
+              <input id="coutHoraire" type="number" min="0" step="1">
+            </div>
+            <div class="form-row">
+              <label for="joursParAn">Jours par an</label>
+              <input id="joursParAn" type="number" min="0" step="1">
+            </div>
+            <div class="info-box">
+              Temps economise estime: <strong id="autoTimeResult">0 h</strong><br>
+              Gain economique estime: <strong id="autoEuroResult">0 EUR</strong>
+            </div>
+            <div class="form-row">
+              <label for="gainCommentaireAuto">Commentaire de calcul</label>
+              <textarea id="gainCommentaireAuto" maxlength="300"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span class="zone-num">05</span> Images</h3>
+          <div class="upload-box">
+            <label for="imgAvant">Images avant</label>
+            <input id="imgAvant" type="file" accept="image/*" multiple>
+            <div class="form-note">Apercu local uniquement.</div>
+            <div id="beforePreview" class="image-preview-grid"></div>
+          </div>
+          <div class="upload-box upload-box-gap">
+            <label for="imgApres">Images apres</label>
+            <input id="imgApres" type="file" accept="image/*" multiple>
+            <div class="form-note">Apercu local uniquement.</div>
+            <div id="afterPreview" class="image-preview-grid"></div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h3><span class="zone-num">06</span> Statut</h3>
+          <div class="form-row">
+            <label for="statut">Statut <span class="required">*</span></label>
+            <select id="statut" required>
+              <option value="En cours">En cours</option>
+              <option value="Complété">Complété</option>
+              <option value="Annulé">Annulé</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="dateOuverture">Date d'ouverture <span class="required">*</span></label>
+            <input id="dateOuverture" type="date" required>
+          </div>
+          <div class="form-row">
+            <label for="dateCloture">Date de cloture</label>
+            <input id="dateCloture" type="date">
+          </div>
+        </section>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn primary" type="submit">Enregistrer le JDI</button>
+      </div>
+    </form>
+  </main>
+
+  <div class="modal-backdrop" id="leaveModal">
+    <div class="modal">
+      <h4>Modifications non enregistrees</h4>
+      <p>Vous avez des modifications en cours. Voulez-vous quitter sans enregistrer ?</p>
+      <div class="toolbar">
+        <button class="btn secondary" type="button" id="stayBtn">Rester sur la page</button>
+        <button class="btn danger" type="button" id="leaveBtn">Quitter sans enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div id="currentUser">Utilisateur:</div>
+    <div class="footer-brand">
+      <span>Entreprise:</span>
+      <img src="img/company-logo.svg" alt="Logo entreprise">
+    </div>
+  </footer>
+
+  <script>
+    window.JDI_DATA = window.JDI_DATA || {
+      appConfig: { fiscalStartMonth: 4, sitePlanImage: "img/site-plan-reel.svg", dashboardSectorPositions: {} },
+      sectors: ["Conditionnement", "Maintenance", "Logistique", "Qualite", "Production"],
+      users: ["fabien.genet"],
+      gainTypes: ["Temps", "Qualité", "Sécurité", "Ergonomie", "Coûts", "Energie", "Autre"],
+      faq: [], vote: { password: "JDI2026", months: [] },
+      items: [
+        { id:"JDI-2026-001", numero:"JDI-2026-001", libelle:"Reduction du temps de changement de format", secteur:"Conditionnement", statut:"En cours", dateOuverture:"2026-03-01", dateCloture:"", descriptionAvant:"", descriptionApres:"", conditionsReussite:"", contributeurs:"", typeGain:"Temps", gainMode:"manuel", gainEuro:2500, gainTempsHeures:18, gainCommentaire:"", presenceImagesAvant:false, presenceImagesApres:false, imageAvant:"", imageApres:"" }
+      ]
+    };
+  </script>
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/formulaire.js"></script>
+</body>
+</html>

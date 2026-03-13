@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="640" viewBox="0 0 1400 640">
+  <rect width="1400" height="640" fill="#e8edf1"/>
+  <rect x="30" y="30" width="1340" height="580" fill="#f5f7f9" stroke="#9eacba" stroke-width="2"/>
+
+  <rect x="70" y="90" width="220" height="150" fill="#dde5ed" stroke="#7f92a5"/>
+  <text x="180" y="170" font-family="Arial" font-size="18" text-anchor="middle" fill="#2e3e51">Conditionnement</text>
+
+  <rect x="360" y="320" width="250" height="180" fill="#dfe8df" stroke="#7f9f7f"/>
+  <text x="485" y="410" font-family="Arial" font-size="18" text-anchor="middle" fill="#31503a">Maintenance</text>
+
+  <rect x="650" y="120" width="250" height="170" fill="#e8e2d6" stroke="#aa9a7b"/>
+  <text x="775" y="210" font-family="Arial" font-size="18" text-anchor="middle" fill="#5b4e33">Logistique</text>
+
+  <rect x="940" y="360" width="220" height="170" fill="#e3dee8" stroke="#9281a6"/>
+  <text x="1050" y="450" font-family="Arial" font-size="18" text-anchor="middle" fill="#4b3f5f">Qualite</text>
+
+  <rect x="1120" y="90" width="220" height="170" fill="#dde8df" stroke="#7e9782"/>
+  <text x="1230" y="180" font-family="Arial" font-size="18" text-anchor="middle" fill="#2f4b35">Production</text>
+
+  <rect x="240" y="70" width="22" height="500" fill="#c8d1da"/>
+  <rect x="600" y="90" width="22" height="470" fill="#c8d1da"/>
+  <rect x="910" y="60" width="22" height="520" fill="#c8d1da"/>
+  <rect x="80" y="270" width="1240" height="22" fill="#c8d1da"/>
+
+  <text x="123" y="72" font-family="Arial" font-size="12" fill="#596777">Plan site industriel (maquette locale)</text>
+</svg>

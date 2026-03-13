@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JDI - Visualisation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#F0EDE6; --bg-card:#FAFAF7; --bg-dark:#1C2B3A; --primary:#1C2B3A; --c-orange:#E8631A; --c-green:#2B7A4B; --c-amber:#B07A00; --c-red:#C0392B; --c-blue:#2567A0; --c-gold:#C49A00; --border:#CCC7BB; --border-str:#A89E92; --text:#1C2B3A; --text-muted:#6B6358; --text-light:#9A9288; --r:3px; --sh:0 2px 8px rgba(28,43,58,.09); --sh2:0 4px 16px rgba(28,43,58,.14); }
+    *{box-sizing:border-box;} html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Barlow",sans-serif;} body{min-height:100vh;display:flex;flex-direction:column;}
+    header{position:sticky;top:0;z-index:60;height:50px;background:var(--bg-dark);border-bottom:3px solid var(--c-orange);box-shadow:var(--sh);} .header-row{max-width:1360px;margin:0 auto;height:47px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .brand{font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:1.28rem;text-transform:uppercase;letter-spacing:.03em;color:#fff;line-height:1;white-space:nowrap;} .brand-do{color:var(--c-orange);} .top-nav{display:flex;align-items:stretch;gap:12px;height:100%;}
+    .top-nav a{display:inline-flex;align-items:center;text-decoration:none;color:rgba(255,255,255,.82);font-family:"Barlow Condensed",sans-serif;font-weight:600;text-transform:uppercase;font-size:.74rem;letter-spacing:.08em;border-bottom:3px solid transparent;padding:0 2px;} .top-nav a:hover{color:#fff;} .top-nav a.active{color:var(--c-orange);border-bottom-color:var(--c-orange);}
+    .container{width:min(1360px,calc(100% - 24px));margin:14px auto;padding:14px;flex:1;} .page-header{margin-bottom:16px;padding:12px 14px;border:1px solid var(--border);border-left:4px solid var(--c-orange);background:linear-gradient(180deg,#faf8f2 0%,#f4f0e7 100%);border-radius:var(--r);box-shadow:var(--sh);} .page-title{margin:0;font-family:"Barlow Condensed",sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;line-height:1;} .page-subtitle{margin:7px 0 0;color:var(--text-muted);font-size:.84rem;font-weight:500;}
+    .zone{margin-bottom:1.5rem;border:1px solid var(--border);background:var(--bg-card);border-radius:var(--r);box-shadow:var(--sh);} .zone-hdr{display:flex;justify-content:space-between;align-items:center;padding:10px 12px 8px;border-bottom:1px dashed #d8d2c8;} .zone-title{margin:0;display:inline-flex;align-items:center;gap:8px;font-family:"Barlow Condensed",sans-serif;font-size:.98rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;} .zone-num{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:20px;border-radius:var(--r);background:var(--c-orange);color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:0 6px;}
+    .zone>.toolbar,.zone>.print-sheet,.zone>.sheet-grid{margin:12px;} .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+    .btn,.btn-ghost,.btn-primary,.btn-danger,.btn.secondary,.btn.primary,.btn.danger{border:1px solid var(--border-str);border-radius:var(--r);padding:9px 24px;font-family:"Barlow Condensed",sans-serif;font-size:.77rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:.15s ease;} .btn:hover{transform:translateY(-1px);} .btn-ghost,.btn.secondary{background:transparent;color:var(--text);} .btn-primary,.btn.primary{background:var(--c-orange);border-color:#ce5513;color:#fff;} .btn-danger,.btn.danger{background:var(--c-red);border-color:#9d3025;color:#fff;}
+    .print-sheet{border:1px solid var(--border-str);border-radius:var(--r);background:#fffdf9;box-shadow:var(--sh);} .sheet-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:11px;border-bottom:1px dashed #d8d2c8;background:linear-gradient(180deg,#faf8f2 0%,#f4f0e7 100%);} .sheet-title{margin:0;font-family:"Barlow Condensed",sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;} .sheet-head div{font-size:.78rem;color:var(--text-muted);} .sheet-head strong{font-family:"Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;}
+    .sheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;} .block{border:1px solid var(--border);border-radius:var(--r);background:#faf9f5;padding:10px;} .block h4{margin:0 0 6px;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);} .block p{margin:0;white-space:pre-line;font-size:.86rem;line-height:1.4;} .readonly-img{width:100%;height:180px;object-fit:cover;border:1px solid var(--border-str);border-radius:var(--r);margin-top:8px;}
+    footer{background:var(--bg-dark);border-top:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.45);font-family:"DM Mono",monospace;font-size:.7rem;padding:9px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;} .footer-brand{display:inline-flex;align-items:center;gap:8px;} .footer-brand img{height:18px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.85);border-radius:2px;padding:1px 2px;}
+    @media (max-width:900px){.sheet-grid{grid-template-columns:1fr;}} @media (max-width:760px){header{height:auto;}.header-row{height:auto;padding:8px 10px;flex-direction:column;align-items:flex-start;}.top-nav{flex-wrap:wrap;}.container{width:calc(100% - 14px);padding:8px;}}
+    @media print{header,footer,.toolbar,.page-header,.zone-hdr{display:none!important;} body,.container{background:#fff;margin:0;padding:0;} .zone,.print-sheet,.block{box-shadow:none;border-color:#ccc;}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-row">
+      <div class="brand">JUST <span class="brand-do">DO</span> IT</div>
+      <nav class="top-nav">
+        <a href="index.html">Dashboard</a>
+        <a href="liste.html">Liste JDI</a>
+        <a href="formulaire.html">Formulaire</a>
+        <a class="active" href="itemvisu.html">Visualisation</a>
+        <a href="analyse.html">Analyse</a>
+        <a href="vote.html">Vote</a>
+        <a href="help.html">Aide / FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1 class="page-title">Visualisation</h1>
+      <p class="page-subtitle">Fiche de communication interne et impression JDI</p>
+    </div>
+
+    <section class="zone">
+      <div class="zone-hdr">
+        <h2 class="zone-title"><span class="zone-num">01</span> Informations JDI</h2>
+      </div>
+      <div class="toolbar">
+        <div>
+          <button class="btn secondary" id="backBtn" type="button">Retour liste</button>
+          <button class="btn secondary" id="editBtn" type="button">Modifier</button>
+        </div>
+        <div>
+          <button class="btn" id="captureBtn" type="button">Capture</button>
+          <button class="btn primary" id="printBtn" type="button">Imprimer</button>
+        </div>
+      </div>
+      <section class="print-sheet" id="printSheet">
+        <div class="sheet-head">
+          <h2 class="sheet-title" id="sheetTitle"></h2>
+          <div>
+            <strong>JUST DO IT</strong><br>
+            Fiche de valorisation terrain
+          </div>
+        </div>
+        <div class="sheet-grid">
+          <article class="block">
+            <h4>Informations generales</h4>
+            <p>Secteur: <span id="metaSecteur"></span>
+Statut: <span id="metaStatus"></span>
+Date d'ouverture: <span id="metaDateOuverture"></span>
+Date de cloture: <span id="metaDateCloture"></span></p>
+          </article>
+          <article class="block">
+            <h4>Contributeurs</h4>
+            <p id="txtContributeurs"></p>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <section class="zone">
+      <div class="zone-hdr">
+        <h2 class="zone-title"><span class="zone-num">02</span> Avant / Apres</h2>
+      </div>
+      <div class="sheet-grid">
+        <article class="block">
+          <h4>Situation avant</h4>
+          <p id="txtAvant"></p>
+          <img id="imgAvant" class="readonly-img" alt="Avant">
+        </article>
+        <article class="block">
+          <h4>Situation apres</h4>
+          <p id="txtApres"></p>
+          <img id="imgApres" class="readonly-img" alt="Apres">
+        </article>
+      </div>
+    </section>
+
+    <section class="zone">
+      <div class="zone-hdr">
+        <h2 class="zone-title"><span class="zone-num">03</span> Gains</h2>
+      </div>
+      <div class="sheet-grid">
+        <article class="block">
+          <h4>Gains estimes</h4>
+          <p id="txtGains"></p>
+        </article>
+        <article class="block">
+          <h4>Conditions de reussite</h4>
+          <p id="txtConditions"></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div id="currentUser">Utilisateur:</div>
+    <div class="footer-brand">
+      <span>Entreprise:</span>
+      <img src="img/company-logo.svg" alt="Logo entreprise">
+    </div>
+  </footer>
+
+  <script>
+    window.JDI_DATA = window.JDI_DATA || {
+      appConfig: { fiscalStartMonth: 4, sitePlanImage: "img/site-plan-reel.svg", dashboardSectorPositions: {} },
+      sectors: ["Conditionnement", "Maintenance", "Logistique", "Qualite", "Production"],
+      users: ["fabien.genet"], gainTypes: ["Temps", "Qualité", "Sécurité", "Ergonomie", "Coûts", "Energie", "Autre"], faq: [], vote: { password: "JDI2026", months: [] },
+      items: [
+        { id:"JDI-2026-001", numero:"JDI-2026-001", libelle:"Reduction du temps de changement de format", titre:"Reduction du temps de changement de format", secteur:"Conditionnement", statut:"En cours", dateOuverture:"2026-03-01", dateCloture:"", descriptionAvant:"Situation initiale terrain.", avant:"Situation initiale terrain.", descriptionApres:"Amelioration en cours.", apres:"Amelioration en cours.", conditionsReussite:"Validation apres 4 semaines.", conditions:"Validation apres 4 semaines.", contributeurs:"Equipe ligne 2", typeGain:"Temps", typeGains:"Temps", gainMode:"manuel", gainEuro:2500, gainTempsHeures:18, imageAvant:"img/avant1.svg", imageApres:"img/apres1.svg" }
+      ]
+    };
+  </script>
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/itemvisu.js"></script>
+</body>
+</html>
